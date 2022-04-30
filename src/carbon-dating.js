@@ -31,16 +31,9 @@ function dateSample(sampleActivity) {
   // let k = 0.693 / HALF_LIFE_PERIOD;
   let k = Math.LN2 / HALF_LIFE_PERIOD;
   let t = Math.ceil(Math.log((MODERN_ACTIVITY) / parseFloat(sampleActivity)) / k);
-  // console.log(Math.ceil(t));
   return Math.ceil(t);
 }
 
 module.exports = {
   dateSample
 };
-
-// console.log(dateSample("1"));
-console.log(dateSample('3')); //, 13305);
-console.log(dateSample('1')); //, 22387);
-console.log(dateSample('9')); //, 4223);
-console.log(dateSample('11')); //, 2564);

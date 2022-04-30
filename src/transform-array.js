@@ -57,7 +57,6 @@ function transform(arr) {
         result.push(doubleElement);
       }
     } else if (element === undefined) {
-      console.log("hello");
     } else {
       if (element) {
         result.push(element);

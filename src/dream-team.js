@@ -20,8 +20,6 @@ function createDreamTeam(members) {
   let stringMembers = members.filter(member => typeof (member) === 'string');
   if (stringMembers.length === 0) { return false };
 
-  console.log(stringMembers);
-
   let result = stringMembers
     .map(member => member.trim()) // clean whitespaces
     .map(member => member[0]) // get first letter
