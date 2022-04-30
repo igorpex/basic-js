@@ -20,13 +20,69 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  encrypt(message, key) {
+    if (message === undefined || key === undefined) throw new Error("Incorrect arguments!");
+    let messageArr = message.split('');
+    let keyArr = key.split('').map(element => element.toUpperCase());
+    if (!this.direct) { messageArr.reverse() };
+
+    messageArr = messageArr
+      .filter(item => { if (item !== undefined) return item })
+      .map(item => item.toUpperCase());
+
+    let keyCounter = 0;
+    let encrypted = messageArr
+      .map((element, index, array) => {
+        if (this.alphabetArr.includes(element)) {
+          let indexRotated = keyCounter % key.length;
+          let offsetNumber = this.alphabetArr.indexOf(keyArr[indexRotated]);
+          let newIndex = (this.alphabetArr.indexOf(element) + offsetNumber) % 26;
+          let newLetter = this.alphabetArr[newIndex];
+          keyCounter++;
+          return newLetter
+        } else {
+          return element
+        }
+      }
+      )
+      .join('');
+    return encrypted;
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  decrypt(message, key) {
+    if (message === undefined || key === undefined) throw new Error("Incorrect arguments!");
+    let messageArr = message.split('');
+    let keyArr = key.split('').map(element => element.toUpperCase());
+    if (!this.direct) { messageArr.reverse() };
+
+    messageArr = messageArr
+      .filter(item => { if (item !== undefined) return item })
+      .map(item => item.toUpperCase());
+
+    let keyCounter = 0;
+    let decrypted = messageArr
+      .map((element, index, array) => {
+        if (this.alphabetArr.includes(element)) {
+          let indexRotated = keyCounter % key.length;
+          let offsetNumber = this.alphabetArr.indexOf(keyArr[indexRotated]);
+          let newIndex = this.alphabetArr.indexOf(element) - offsetNumber;
+          if (newIndex < 0) newIndex += 26;
+          newIndex = newIndex % 26;
+          let newLetter = this.alphabetArr[newIndex];
+          keyCounter++;
+          return newLetter
+        } else {
+          return element
+        }
+      }
+      )
+      .join('');
+    return decrypted;
+  }
+
+  constructor(direct = true) {
+    this.direct = direct;
+    this.alfabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    this.alphabetArr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   }
 }
 
