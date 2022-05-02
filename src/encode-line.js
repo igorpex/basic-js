@@ -10,9 +10,43 @@ const { NotImplementedError } = require('../extensions/index.js');
  * For aabbbc should return 2a3bc
  *
  */
-function encodeLine(/* str */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function encodeLine(str) {
+  let result = '';
+  let count = 1;
+  let prevSymbol = '';
+  let len = str.length;
+
+  for (let i = 0; i < len; i++) {
+    let symbol = str[i];
+    //count repeating symbols
+    if (symbol === prevSymbol) {
+      count++;
+      prevSymbol = symbol;
+    } else { // if it is a new symbol
+      // if it was previous symbol before, need to record it
+      if (prevSymbol && count === 1) {
+        result += prevSymbol;
+      }
+      else if (prevSymbol && count > 1) {
+        result += count;
+        result += prevSymbol;
+      }
+      count = 1;
+      prevSymbol = symbol;
+    }
+
+    // if it was the last symbol, need to finalize it
+    if (i === len - 1) {
+      if (prevSymbol && count === 1) {
+        result += prevSymbol;
+      }
+      else if (prevSymbol && count > 1) {
+        result += count;
+        result += prevSymbol;
+      }
+    }
+  }
+  return result
 }
 
 module.exports = {
