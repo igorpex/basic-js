@@ -15,10 +15,64 @@ const { NotImplementedError } = require('../extensions/index.js');
  * => 'STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS'
  *
  */
-function repeater(/* str, options */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function repeater(str, options) {
+  if (!options) {
+    return str
+  }
+
+  let repeatTimes = 0;
+  if (options.repeatTimes > 0) {
+    repeatTimes = options.repeatTimes;
+  }
+
+  let separator = "+";
+  if (options['separator'] !== undefined) {
+    separator = `${options['separator']}`;
+  }
+  let addition = "";
+
+  if (options['addition'] !== undefined) {
+    addition = `${options['addition']}`
+  }
+
+  let additionRepeatTimes = 0;
+  if (options['additionRepeatTimes'] !== undefined) {
+    additionRepeatTimes = options['additionRepeatTimes']
+  }
+
+  let additionSeparator = '|';
+  if (options['additionSeparator'] !== undefined) {
+    additionSeparator = `${options['additionSeparator']}`;
+  }
+
+  let additionsArr = [];
+  if (additionRepeatTimes > 0) {
+    for (let j = 0; j < additionRepeatTimes; j++) {
+      additionsArr.push(addition);
+    }
+  } else {
+    additionsArr.push(addition);
+  }
+
+  let additions = '';
+  additions = additionsArr.join(additionSeparator);
+
+  let message = str + additions
+
+  let resultArr = [];
+  if (repeatTimes > 0) {
+    for (let i = 0; i < repeatTimes; i++) {
+      resultArr.push(message);
+    }
+  } else {
+    resultArr.push(message);
+  }
+
+  let result = resultArr.join(separator);
+  return result
 }
+
+
 
 module.exports = {
   repeater
